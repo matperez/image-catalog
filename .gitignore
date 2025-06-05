@@ -1,6 +1,11 @@
 # Виртуальное окружение
 venv/
 
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Картинки (JPEG, PNG, RAW и др.)
 *.jpg
 *.jpeg
