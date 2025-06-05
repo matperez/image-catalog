@@ -24,6 +24,7 @@
 image-catalog/
 ├── extract_exif.py        # Скрипт для извлечения EXIF-метаданных
 ├── describe_image.py      # Скрипт для получения описания изображения через Ollama
+├── index_images.py        # Скрипт для индексации изображений в SQLite
 ├── requirements.txt       # Зависимости Python
 └── README.md              # Описание проекта
 ```
@@ -39,6 +40,20 @@ image-catalog/
 2. Установите зависимости:
    ```bash
    pip install -r requirements.txt
+   ```
+
+## Запуск Ollama в Docker
+
+Для удобства можно запустить Ollama в Docker-контейнере:
+
+1. Запустите Ollama:
+   ```bash
+   docker run -d --name ollama -p 11434:11434 -v ollama:/root/.ollama ollama/ollama
+   ```
+
+2. Загрузите модель gemma3:
+   ```bash
+   docker exec -it ollama ollama pull gemma3
    ```
 
 ## Описание скриптов
@@ -69,10 +84,27 @@ python describe_image.py <путь_к_изображению>
 **Пример вывода:**
 Подробное текстовое описание содержимого изображения (локация, объекты, действия, цвета и т.д.), пригодное для последующего поиска по описанию.
 
+### index_images.py
+
+Скрипт для индексации изображений в каталоге. Для каждого изображения извлекает EXIF-данные и получает описание через LLM, сохраняя информацию в базу данных SQLite (images.db).
+
+**Использование:**
+```bash
+python index_images.py <каталог_с_изображениями>
+```
+
+**Функциональность:**
+- Создаёт базу данных images.db с таблицами images и image_descriptions (FTS).
+- Для каждого изображения:
+  - Извлекает EXIF-данные (через extract_exif.py).
+  - Получает описание через LLM (через describe_image.py).
+  - Сохраняет путь, exif (в JSON) и описание в базу.
+- Пропускает уже проиндексированные изображения (по пути к файлу).
+
 ## Требования
 
 - Python 3.8 или выше
-- Ollama (локально)
+- Ollama (локально или в Docker)
 - Модель gemma3 для Ollama
 
 ## Лицензия
