@@ -29,4 +29,8 @@ __pycache__/
 
 # Файлы, создаваемые системой
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Индексы и базы данных проекта
+image_index.faiss
+images.db 
