@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import sqlite3
+import argparse
 from datetime import datetime
 from extract_exif import extract_exif_data
 from describe_image import get_image_description
@@ -44,7 +45,7 @@ def init_db():
 def is_image_file(filename):
     return os.path.splitext(filename)[1].lower() in IMAGE_EXTENSIONS
 
-def index_images_in_directory(directory):
+def index_images_in_directory(directory, recursive=False):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     for root, _, files in os.walk(directory):
@@ -69,18 +70,20 @@ def index_images_in_directory(directory):
             ''', (file_path, exif_json, description))
             conn.commit()
             print('  Готово!')
+        if not recursive:
+            break
     conn.close()
 
 def main():
-    if len(sys.argv) != 2:
-        print('Использование: python index_images.py <каталог_с_изображениями>')
-        sys.exit(1)
-    directory = sys.argv[1]
-    if not os.path.isdir(directory):
+    parser = argparse.ArgumentParser(description='Индексация изображений в каталоге.')
+    parser.add_argument('directory', help='Путь к каталогу с изображениями')
+    parser.add_argument('-r', '--recursive', action='store_true', help='Рекурсивный обход каталога')
+    args = parser.parse_args()
+    if not os.path.isdir(args.directory):
         print('Указанный путь не является каталогом!')
         sys.exit(1)
     init_db()
-    index_images_in_directory(directory)
+    index_images_in_directory(args.directory, args.recursive)
     print('Индексация завершена.')
 
 if __name__ == '__main__':

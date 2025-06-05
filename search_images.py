@@ -70,7 +70,7 @@ def main():
             print(f"\nРасстояние: {distance:.4f}")
             print(f"ID: {image_id}")
             print(f"Путь: {file_path}")
-            print(f"Описание: {description[:200]}...")  # Показываем первые 200 символов
+            print(f"Описание: {description}")  # Выводим полное описание
             print("-" * 80)
             
     except Exception as e:
