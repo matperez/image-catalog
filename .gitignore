@@ -1,10 +1,52 @@
-# Виртуальное окружение
-venv/
-
-# Python cache files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and descriptions
+logs/
+*.log
+*_description.json
+
+# Database
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Картинки (JPEG, PNG, RAW и др.)
 *.jpg
@@ -13,23 +55,12 @@ __pycache__/
 *.gif
 *.bmp
 *.tiff
-*.tif
-*.webp
-*.heic
 *.raw
 *.cr2
 *.nef
 *.arw
-*.dng
-*.orf
-*.sr2
-*.rw2
 *.pef
 *.svg
-
-# Файлы, создаваемые системой
-.DS_Store
-Thumbs.db
 
 # Индексы и базы данных проекта
 image_index.faiss
